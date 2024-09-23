@@ -1,12 +1,12 @@
-const { generateLoremIpsum } = require("../services/loremService");
+const { generateLoremIpsumComp } = require("../services/loremServEncoded");
 const { encodeText } = require("../utils/encodingService");
 
 // Controller to handle lorem ipsum logic
-const getLoremIpsum = (req, res) => {
+const getLoremIpsumComp = (req, res) => {
   const { paragraphs, words, sentences, encoding } = req.query;
   let result = "";
   if (paragraphs && words) {
-    result = generateLoremIpsum(
+    result = generateLoremIpsumComp(
       "generateByParagraphsAndWords",
       paragraphs,
       words
@@ -14,16 +14,16 @@ const getLoremIpsum = (req, res) => {
   }
   // Case 2: Only words are passed
   else if (words) {
-    result = generateLoremIpsum("words", words);
+    result = generateLoremIpsumComp("words", words);
   } else if (sentences) {
-    result = generateLoremIpsum("sentences", sentences);
+    result = generateLoremIpsumComp("sentences", sentences);
   }
   // Case 3: Only paragraphs are passed (default case)
   else if (paragraphs) {
-    result = generateLoremIpsum("paragraphs", paragraphs);
+    result = generateLoremIpsumComp("paragraphs", paragraphs);
   } else {
     // Default: 1 paragraph with default logic
-    result = generateLoremIpsum("paragraphs", paragraphs);
+    result = generateLoremIpsumComp("paragraphs", paragraphs);
   }
 
   // Check if encoding parameter is present and true
@@ -31,7 +31,7 @@ const getLoremIpsum = (req, res) => {
     result = encodeText(result); // Apply encoding logic
   }
 
-  res.json({ response: result });
+  res.json({ encoded_response: result });
 };
 
-module.exports = { getLoremIpsum };
+module.exports = { getLoremIpsumComp };
