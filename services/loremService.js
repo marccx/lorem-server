@@ -26,11 +26,22 @@ const generateLoremIpsum = (type, amount, param2) => {
   return result;
 };
 
-const generateByWords = (words) => {
+const generateByWords = (words, uppercase = false) => {
   // Logic for generating words
   let result = "";
-  for (let i = 0; i < words; i++) {
-    result += " " + jsonData[selectRand(jsonData)].toLowerCase();
+  if (uppercase == false) {
+    for (let i = 0; i < words; i++) {
+      result += " " + jsonData[selectRand(jsonData)].toLowerCase();
+    }
+  }
+  if (uppercase == true) {
+    for (let i = 0; i < words; i++) {
+      if (i === 0) {
+        let word =  jsonData[selectRand(jsonData)];
+        result += word.charAt(0).toUpperCase() + word.slice(1);
+      }
+      result += " " + jsonData[selectRand(jsonData)].toLowerCase();
+    }
   }
   return Array(result);
 };
@@ -40,7 +51,7 @@ const generateBySentences = (sentences) => {
   let result = "";
   let resultWords = [];
   for (let i = 0; i < sentences; i++) {
-    result += generateByWords(randInterval(15, 20)) + ".";
+    result += generateByWords(randInterval(15, 20), true) + ".";
   }
   resultWords.push(result);
 
